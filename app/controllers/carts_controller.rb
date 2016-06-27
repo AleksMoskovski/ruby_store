@@ -1,15 +1,26 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  #before_action :set_cart, only: [:show, :edit, :update, :destroy]
 
   # GET /carts
   # GET /carts.json
   def index
-    @carts = Cart.all
+   if session[:carts] then
+    @cart = session[:carts]
+  else 
+    @cart = {}
+   end
+  
   end
 
-  # GET /carts/1
+
+ # GET /carts/1
   # GET /carts/1.json
   def show
+    if session[:carts] then
+    @cart = session[:carts]
+  else 
+    @cart = {}
+   end
   end
 
   # GET /carts/new
@@ -20,19 +31,35 @@ class CartsController < ApplicationController
   # GET /carts/1/edit
   def edit
   end
+  def add 
+    id = params[:id]
+    
+    if session[:carts] then
+    cart = session[:carts]
+  else 
+    session[:cart] = {}
+    cart = session[:cart]
+   end
 
+   if cart[id] then
+    cart[id] = cart[id]+1
+  else 
+    cart[id] = 1 
+  end 
+    redirect_to cart
+  end
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.new(cart_params)
-
+    
+    @cart = Cart.new(product_params)
     respond_to do |format|
       if @cart.save
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
-        format.json { render :show, status: :created, location: @cart }
+        #format.json { render :show, status: :created, location: @cart }
       else
         format.html { render :new }
-        format.json { render json: @cart.errors, status: :unprocessable_entity }
+        #format.json { render json: @cart.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,6 +96,12 @@ class CartsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cart_params
-      params.require(:cart).permit(:user_id, :product_id, :amount, :tottal_price)
+      params.require(:cart).permit(:id)
+       #params.require(:cart).permit(:user_id, :product_id, :amount, :tottal_price)
     end
+    
+    def product_params
+      params.require (:product),permit(:id)
+    end
+
 end

@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root 'products#index'
   resources :orders
   resources :carts
+  get '/carts' => 'carts#index'
+  get '/carts/:id' => 'carts#add'
+  #get '/carts/:id' => 'carts#create'
   resources :products
   resources :categories
   devise_for :users
