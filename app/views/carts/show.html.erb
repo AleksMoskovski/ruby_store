@@ -1,9 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<%= @cart.each do |id , quantity| %>
-<% product = Product.find_by_id[id] %>
-	<%= product.name %>
-<% end %>
+<%# @cart.each do |id , quantity| %>
+<% @product = Product.find(@id) %>
+	
+	<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= Category.find(@product.category_id).name %>
+</p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @product.info %>
+</p>
+
  
-<%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', carts_path %>

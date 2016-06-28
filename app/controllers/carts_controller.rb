@@ -4,23 +4,14 @@ class CartsController < ApplicationController
   # GET /carts
   # GET /carts.json
   def index
-   if session[:carts] then
-    @cart = session[:carts]
-  else 
-    @cart = {}
-   end
-  
+    @cart = Cart.all
   end
 
 
  # GET /carts/1
   # GET /carts/1.json
   def show
-    if session[:carts] then
-    @cart = session[:carts]
-  else 
-    @cart = {}
-   end
+    @id = params[:id]
   end
 
   # GET /carts/new
@@ -34,18 +25,7 @@ class CartsController < ApplicationController
   def add 
     id = params[:id]
     
-    if session[:carts] then
-    cart = session[:carts]
-  else 
-    session[:cart] = {}
-    cart = session[:cart]
-   end
-
-   if cart[id] then
-    cart[id] = cart[id]+1
-  else 
-    cart[id] = 1 
-  end 
+    
     redirect_to cart
   end
   # POST /carts
