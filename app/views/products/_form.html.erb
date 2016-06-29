@@ -1,3 +1,4 @@
+ <div class="form-products">
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
     <div id="error_explanation">
@@ -10,28 +11,35 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field ">
-    <%=   f.label :name %><br>
-    <%= f.text_field :name %>
+ 
+  <div class="input-group ">
+    <span class="input-group-addon" id="basic-addon1"><%= f.label :name %></span>
+    <%= f.text_field :name, :class => "form-control", :placeholder => "Name" %>
   </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.number_field :price %>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">$</span>
+    <%= f.number_field :price, :class => "form-control", :placeholder => "Price" %>
   </div>
-  <div class="field">
-    <%= f.label :category_id %><br>
-    <%= f.number_field :category_id %>
+  <div class="form-group">
+    <%= f.label :category_id %>
+    <%# f.number_field :category_id %>
+    <select class="form-control" id="sel1">
+    <% @categories = Category.all %>
+    <%= @categories.each do |cat| %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+    <% end %>
+      </select>
   </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.number_field :amount %>
+  <div class="input-group">
+    <%# f.label :amount %><br>
+    <%# f.number_field :amount %>
   </div>
-  <div class="field">
-    <%= f.label :info %><br>
-    <%= f.text_field :info %>
+  <div class="form-group">
+    <%= f.text_area :info, :class => "form-control", placeholder: "Info", rows:  "8"  %>
   </div>
-  <div class="actions" class="btn btn-success">
-    <%= f.submit %>
+  <div class="actions">
+    <%= f.submit nil , :class => "btn btn-success" %>
+    <%= link_to 'Back', products_path, :class => "btn btn-default" %>
   </div>
 <% end %>
+</div>
